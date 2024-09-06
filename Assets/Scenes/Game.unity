@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 204422361}
   - component: {fileID: 204422360}
   m_Layer: 0
-  m_Name: Bakcground
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -386,6 +386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4982f393e7a39b843ac89f2ece755a60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ballPrefab: {fileID: 3672926884903571947, guid: 9356f39f3c5653b42881de5fd2c1378f, type: 3}
 --- !u!1 &1314332224
 GameObject:
   m_ObjectHideFlags: 0

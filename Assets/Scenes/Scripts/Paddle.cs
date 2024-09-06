@@ -1,9 +1,26 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Paddle : MonoBehaviour
 {
+    #region Singleton
+    private static Paddle _instance;
+    public static Paddle Instance => _instance;
+
+    private void Awake()
+    {
+        if (_instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
+    #endregion
     private Camera mainCamera;
     private float paddleWidth = 6.5f; // Ширина платформы
     private float paddleHeight = 0.45f; // Высота платформы
@@ -34,5 +51,27 @@ public class Paddle : MonoBehaviour
 
         // Обновляем позицию платформы
         transform.position = new Vector3(clampedX, transform.position.y, transform.position.z);
+    }
+    private void OnCollisionEnter2D(Collision2D coll)
+    {
+        if (coll.gameObject.tag == "Ball")
+        {
+            Rigidbody2D ballRB = coll.gameObject.GetComponent<Rigidbody2D>();
+            Vector3 hitPoint = coll.contacts[0].point;
+            Vector3 paddleCenter = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, 0);
+
+            ballRB.velocity = Vector2.zero;
+
+            float difference = paddleCenter.x - hitPoint.x;
+
+            if (hitPoint.x < paddleCenter.x)
+            {
+                ballRB.AddForce(new Vector2(-(MathF.Abs(difference * 200)), BallsManager.Instance.initialBallSpeed));
+            }
+            else
+            {
+                ballRB.AddForce(new Vector2((MathF.Abs(difference * 200)), BallsManager.Instance.initialBallSpeed));
+            }
+        }
     }
 }
